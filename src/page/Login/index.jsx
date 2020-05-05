@@ -1,11 +1,12 @@
 import React, {Component} from "react";
+import './index.less'
 
 class Login extends Component {
 
   render() {
     return (
-      <div style={{fontSize:'0.16rem'}}>
-        hello2
+      <div className="login-box">
+        hello233
       </div> 
     )
   }

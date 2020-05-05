@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
 module.exports = {
   mode:'development',
@@ -23,18 +24,28 @@ module.exports = {
 
   module: {
     rules: [
+      // {
+      //   test: /\.less$/,
+      //   use: [
+      //     {
+      //       loader: MiniCssExtractPlugin.loader,
+      //       options: {
+      //         hmr: process.env.NODE_ENV === 'development',
+      //       },
+      //     },
+      //     'css-loader',
+      //     'less-loader',
+      //   ],
+      // },
       {
         test: /\.less$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: process.env.NODE_ENV === 'development',
-            },
-          },
-          'css-loader',
-          'less-loader',
-        ],
+        use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }, {
+          loader: "less-loader" // compiles Less to CSS
+        }]
       },
       {
         test: /\.(js|jsx)$/,
@@ -53,6 +64,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template:'./index.html'
     }),
-    new MiniCssExtractPlugin()
+    // 我们需要webpack告诉我们那个模块需要那个打包文件
+    new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json',
+    }),
+    // new MiniCssExtractPlugin()
   ],
 }
