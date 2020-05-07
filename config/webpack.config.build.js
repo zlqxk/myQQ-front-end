@@ -1,14 +1,14 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
 module.exports = {
   mode:'development',
   entry:'./src/index.js',
   output:{
     filename:'index.js',
-    path:path.resolve(__dirname, '../dist')
+    path:path.resolve(__dirname, '../dist'),
+    publicPath:"//47.111.171.15/myqq",
   },
 
   devtool: "source-map",
@@ -63,10 +63,6 @@ module.exports = {
   plugins:[
     new HtmlWebpackPlugin({
       template:'./index.html'
-    }),
-    // 我们需要webpack告诉我们那个模块需要那个打包文件
-    new ReactLoadablePlugin({
-      filename: './dist/react-loadable.json',
     }),
     // new MiniCssExtractPlugin()
   ],

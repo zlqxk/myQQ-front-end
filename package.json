@@ -37,5 +37,8 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "antd-mobile": "^2.3.1"
   }
 }
