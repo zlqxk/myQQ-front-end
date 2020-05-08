@@ -8,7 +8,7 @@ module.exports = {
   output:{
     filename:'index.js',
     path:path.resolve(__dirname, '../dist'),
-    publicPath:"//47.111.171.15/myqq",
+    publicPath:"//47.111.171.15/myqq/",
   },
 
   devtool: "source-map",
@@ -56,6 +56,10 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       }
     ],
   },

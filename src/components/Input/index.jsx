@@ -2,7 +2,7 @@ import React, {} from "react";
 import './index.less';
 
 const Input = function(props) {
-  const { showLogo=false } = props
+  const { showLogo=false, onChange, type } = props
   return (
     <div className="input-box">
       { showLogo? 
@@ -11,7 +11,10 @@ const Input = function(props) {
           </div>: 
         null 
       }
-      <input/>
+      <input
+        onChange={onChange}
+        type={type}
+      />
     </div>
   )
 }

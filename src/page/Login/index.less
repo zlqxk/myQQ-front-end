@@ -12,4 +12,36 @@
     border-radius: .5rem;
     margin-top: .2rem;
   }
+  .login-button{
+    width: .6rem;
+    height: .6rem;
+    margin-top: .54rem;
+    border-radius: 50%;
+    background: linear-gradient(#26b7ef, #7878f9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    &:disabled{
+      background: #f3f3f3;
+    }
+    img{
+      width: .3rem;
+    }
+  }
+  .login-bottom{
+    display: flex;
+    position: fixed;
+    bottom: .34rem;
+    width: 50%;
+    justify-content: space-around;
+    span{
+      color: black;
+      font-size: 12px;
+      font-weight: 560;
+      &:nth-child(2){
+        color: #dadada;
+      }
+    }
+  }
 }
