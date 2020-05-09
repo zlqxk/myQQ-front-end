@@ -9,6 +9,7 @@ const Button =  function(props) {
         className={`button ${!visible? 'visible': ''}`}
         onClick={onClick}
         disabled={!visible}
+        style={props.style}
       >
         {props.children}
       </button>
