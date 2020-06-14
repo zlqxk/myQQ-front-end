@@ -9,7 +9,7 @@ module.exports = {
   output:{
     filename:'index.js',
     path:path.resolve(__dirname, '../dist'),
-    publicPath:"//localhost:9000/",
+    publicPath:"//localhost:9001/",
   },
 
   devtool: "source-map",
@@ -79,7 +79,14 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "../dist"),
     compress: true,
-    port: 9000,
-    open:true
+    port: 9001,
+    disableHostCheck: true,
+    open:true,
+    proxy: {
+      'http://localhost:9001': {
+        target: 'http://47.111.171.15',// 接口的域名
+        changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
+      }
+    }
   }
 }
