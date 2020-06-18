@@ -1,34 +1,30 @@
 import React, { useState, useRef, useEffect } from "react";
 import './index.less';
 import Button from '../../components/Button';
-import { Checkbox, InputItem } from 'antd-mobile';
-import axios from '../../untils/axios';
-
-let id = null;
-let code = ''
+import { Checkbox } from 'antd-mobile';
+import { API_sendCode, API_checkCode } from '../../api';
+let id  = '';
 
 const Register = function(props) {
 
   const [isReadAgreement, setIsReadAgreement] = useState(false);
   const [time, setTime] = useState(0);
-  const [inputMoblie, setInputMobile] = useState('')
-  const [inputCode, setInputCode] = useState('')
+  const [inputMoblie, setInputMobile] = useState('');
+  const [inputCode, setInputCode] = useState('');
   const currentTime = useRef(60);
 
+  useEffect(() => {
+    return () => {
+      clearInterval(id)
+    }
+  },[clearInterval])
 
   /**
    * 发送验证码
    */
   const sendCode = () => {
-    console.log(inputMoblie, 'inputMoblie')
-    axios({
-      url:'/sendCode',
-      data:{
-        mobile: inputMoblie
-      },
-      method:'post'
-    })
     handleInterval()
+    API_sendCode({mobile: inputMoblie})
   }
 
   /**
@@ -49,16 +45,25 @@ const Register = function(props) {
     }, 1000)
   }
 
-  useEffect(() => {
-    return () => {
-      clearInterval(id)
+  /**
+   * 手机号注册
+   */
+  const mobileRegister = () => {
+    const data = {
+      mobile: inputMoblie,
+      code: inputCode
     }
-  },[clearInterval])
+    API_checkCode(data).then(res => {
+      if(res.success) {
+
+      }
+    })
+  }
   
   return (
     <div className="register-box">
       <header>
-        <img onClick={() => {props.history.push('/login')}} src="//47.111.171.15:7001/myqq/img/left.png" alt=""/>
+        {/* <img onClick={() => {props.history.push('/login')}} src="//47.111.171.15:7001/myqq/img/left.png" alt=""/> */}
       </header>
       <article>
         输入手机号码
@@ -110,7 +115,7 @@ const Register = function(props) {
       <div className="register-button">
         <Button 
           visible={isReadAgreement}
-          onClick={() => {console.log(11)}}
+          onClick={mobileRegister}
         >
           下一步
         </Button>
