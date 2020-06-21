@@ -25,7 +25,7 @@ function handleReject() {
 
 export default function(opt) {
   return axios(opt).then(
-    res => handleReslove(res) ,
+    res => handleReslove(res)
   ).catch(
     // 处理失败的回调
     error => handleReject(error)

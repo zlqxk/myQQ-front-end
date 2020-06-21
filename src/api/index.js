@@ -27,3 +27,12 @@ export const API_checkCode = (data) => {
   }
   return axios(opt)
 }
+
+export const API_create = (data) => {
+  const opt = {
+    url: API.create,
+    method: 'POST',
+    data
+  }
+  return axios(opt)
+}

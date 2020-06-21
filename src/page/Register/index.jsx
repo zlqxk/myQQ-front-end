@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import './index.less';
-import Button from '../../components/Button';
+import Button from '$src/components/Button';
 import { Checkbox } from 'antd-mobile';
-import { API_sendCode, API_checkCode } from '../../api';
+import { API_sendCode, API_checkCode } from '$src/api';
 let id  = '';
 
 const Register = function(props) {
@@ -23,8 +23,11 @@ const Register = function(props) {
    * 发送验证码
    */
   const sendCode = () => {
-    handleInterval()
-    API_sendCode({mobile: inputMoblie})
+    API_sendCode({mobile: inputMoblie}).then(res => {
+      if(res.success) {
+        handleInterval()
+      }
+    })
   }
 
   /**
@@ -55,7 +58,12 @@ const Register = function(props) {
     }
     API_checkCode(data).then(res => {
       if(res.success) {
-
+        props.history.push({
+          pathname: '/password',
+          state: {
+            mobile: inputMoblie
+          }
+        })
       }
     })
   }

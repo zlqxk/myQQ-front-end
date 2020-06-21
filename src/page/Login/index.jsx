@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './index.less'
 import Input from "$src/components/Input";
-import { API_login } from '../../api'
+import { API_login } from '$src/api'
 import { Modal } from 'antd-mobile'
 const alert = Modal.alert;
 
