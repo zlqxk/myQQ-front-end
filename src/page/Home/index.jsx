@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 
 const Home = function(props) {
-  useEffect(() => {
-    if (true) {
-      props.history.replace('/login')
-    }
-  },[])
 
   return (
     <>

@@ -15,6 +15,7 @@ module.exports = {
     port: 9001,
     disableHostCheck: true,
     open:true,
+    historyApiFallback: true,
     proxy: {
       'http://localhost:9001': {
         target: 'http://127.0.0.1:7001',// 接口的域名
