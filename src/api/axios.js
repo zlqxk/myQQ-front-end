@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { Toast } from 'antd-mobile';
+import { Modal } from 'antd-mobile';
+const alert = Modal.alert;
 
 function handleReslove(res) {
   if (!res) return;
   const data = res.data;
   console.log(data,'data')
   if (!data) {
-    Toast.fail('网络错误，请稍后再试');
+    alert('网络错误，请稍后再试');
     return Promise.reject(res || {})
   }
   if (!data.success) {
-    Toast.fail(data.msg || '网络错误，请稍后再试');
+    alert(data.msg || '网络错误，请稍后再试');
     return Promise.resolve(data)
   }
   if (data.success) {
@@ -20,7 +21,7 @@ function handleReslove(res) {
 }
 
 function handleReject() {
-  Toast.fail('请求错误');
+  alert('请求错误');
 }
 
 export default function(opt) {
