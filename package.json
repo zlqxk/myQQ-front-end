@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config ./config/webpack.config.js",
-    "dev": "webpack-dev-server --env dev --config ./config/webpack.config.js",
+    "start": "webpack-dev-server --env dev --config ./config/webpack.config.js",
     "lint": "eslint ./src"
   },
   "repository": {
@@ -43,6 +43,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "antd-mobile": "^2.3.3"
+    "antd-mobile": "^2.3.3",
+    "redux": "^4.0.5",
+    "redux-saga": "^1.1.3"
   }
 }
