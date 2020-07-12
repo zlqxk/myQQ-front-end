@@ -4,7 +4,9 @@ const Home = function(props) {
 
   return (
     <>
-      尽情期待
+      <div x-if={true}>
+        尽情期待
+      </div>
     </>
   )
 }

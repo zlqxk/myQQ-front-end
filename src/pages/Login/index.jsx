@@ -16,7 +16,7 @@ const Login = function (props) {
     };
     API_login(data).then((res) => {
       if (res.success) {
-        alert("登录成功");
+        props.history.replace("/home");
       }
     });
   };

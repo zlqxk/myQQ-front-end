@@ -1,7 +1,8 @@
 {
-    "presets": ["@babel/env", "@babel/preset-react"],
-    "plugins": [
-      ["import", { "libraryName": "antd-mobile", "style": "css" }], // `style: true` 会加载 less 文件
-      ["@babel/plugin-transform-runtime"]
-    ]
+  "presets": ["@babel/env", "@babel/preset-react"],
+  "plugins": [
+    ["import", { "libraryName": "antd-mobile", "style": "css" }], // `style: true` 会加载 less 文件
+    ["@babel/plugin-transform-runtime"],
+    ["./babel-plugin-x-if.js"]
+  ]
 }
