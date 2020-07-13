@@ -27,6 +27,8 @@
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
+    "babel-plugin-x-for": "^0.0.1",
+    "babel-plugin-x-if": "^0.0.1",
     "css-loader": "^3.6.0",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.20.0",

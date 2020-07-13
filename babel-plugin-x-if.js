@@ -9,9 +9,9 @@ module.exports = function ({ types: t }) {
         if (!xIfAttr) return;
         const openElement = t.jSXOpeningElement(
           node.openingElement.name,
-          node.openingElement.attributes
-            ? node.openingElement.attributes.filter((attr) => attr !== xIfAttr)
-            : null
+          node.openingElement.attributes.filter((item) => {
+            return item.name.name !== "x-if";
+          })
         );
         const Element = t.JSXElement(
           openElement,
