@@ -1,22 +1,23 @@
-import React, {} from "react";
-import './index.less';
+import React from "react";
+import PropTypes from "prop-types";
+import "./index.less";
 
-const Input = function(props) {
-  const { showLogo=false, onChange, type } = props
+const Input = function (props) {
+  const { userPic, onChange, type } = props;
   return (
     <div className="input-box">
-      { showLogo? 
-          <div className="input-img">
-            <img width="100%" height="100%" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588882308143&di=e627d42402ece767896fe776254226d8&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F36%2F48%2F19300001357258133412489354717.jpg" alt=""/>
-          </div>: 
-        null 
-      }
-      <input
-        onChange={onChange}
-        type={type}
-      />
+      <div x-if={userPic} className="input-img">
+        <img width="100%" height="100%" src={userPic} alt="" />
+      </div>
+      <input onChange={onChange} type={type} />
     </div>
-  )
-}
+  );
+};
 
-export default Input
+Input.propTypes = {
+  userPic: PropTypes.string,
+  onChange: PropTypes.func,
+  type: PropTypes.string,
+};
+
+export default Input;

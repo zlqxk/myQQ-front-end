@@ -14,7 +14,7 @@ const Login = function (props) {
       account,
       password,
     };
-    API_login(data).then((res) => {
+    API_login(data).then(res => {
       if (res.success) {
         props.history.replace("/home");
       }
@@ -32,8 +32,8 @@ const Login = function (props) {
       </div>
       <div className="login-content">
         <Input
-          showLogo={true}
-          onChange={(e) => {
+          userPic="//timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588882308143&di=e627d42402ece767896fe776254226d8&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F36%2F48%2F19300001357258133412489354717.jpg"
+          onChange={e => {
             setAccount(e.target.value);
           }}
         />
@@ -41,7 +41,7 @@ const Login = function (props) {
       <div className="login-content">
         <Input
           type="password"
-          onChange={(e) => {
+          onChange={e => {
             setPassword(e.target.value);
           }}
         />

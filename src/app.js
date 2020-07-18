@@ -1,13 +1,14 @@
-import React, {Component} from "react";
-import Router from './router'
+import React, { Component } from "react";
+import Router from "../route";
 
 class App extends Component {
-
   render() {
     return (
-      <Router/>
-    )
+      <>
+        <Router />
+      </>
+    );
   }
 }
 
-export default App
+export default App;

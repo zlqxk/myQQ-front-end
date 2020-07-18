@@ -1,20 +1,28 @@
-import React, { memo } from 'react';
-import './index.less';
+import React from "react";
+import PropTypes from "prop-types";
+import "./index.less";
 
-const Button =  function(props) {
-  const { visible=true, onClick } = props
+const Button = props => {
+  const { visible = true, onClick, style, children } = props;
   return (
     <>
       <button
-        className={`button ${!visible? 'visible': ''}`}
+        className={`button ${!visible ? "visible" : ""}`}
         onClick={onClick}
         disabled={!visible}
-        style={props.style}
+        style={style}
       >
-        {props.children}
+        {children}
       </button>
     </>
-  )
-}
+  );
+};
 
-export default memo(Button)
+Button.propTypes = {
+  visible: PropTypes.bool,
+  onClick: PropTypes.func,
+  style: PropTypes.object,
+  children: PropTypes.node,
+};
+
+export default Button;

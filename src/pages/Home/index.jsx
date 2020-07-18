@@ -1,14 +1,50 @@
-import React, { useEffect } from 'react';
-const arr = [1,2,3,4,5,6]
-const Home = function(props) {
+import React, { useEffect } from "react";
+import "./index.less";
+import MessageListCard from "$src/components/MessageListCard";
+import TabBar from "$src/components/TabBar";
+import HeaderBar from "$src/components/HeaderBar";
+const arr = [
+  {
+    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
+    nickName: "珂珂",
+    lastRecord: "你好啊露露",
+    lastTime: "昨天",
+  },
+  {
+    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
+    nickName: "珂珂",
+    lastRecord: "你好啊露露",
+    lastTime: "昨天",
+  },
+  {
+    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
+    nickName: "珂珂",
+    lastRecord: "你好啊露露",
+    lastTime: "昨天",
+  },
+  {
+    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
+    nickName: "珂珂",
+    lastRecord: "你好啊露露",
+    lastTime: "昨天",
+  },
+];
 
+const Home = function (props) {
   return (
-    <>
-      <div key={index} x-for={(item, index) in arr} x-if={true}>
-        尽情期待
-      </div>
-    </>
-  )
-}
+    <div className="home-box">
+      <HeaderBar />
+      <MessageListCard
+        key={index}
+        x-for={(item, index) in arr}
+        userPic={item.userPic}
+        nickName={item.nickName}
+        lastRecord={item.lastRecord}
+        lastTime={item.lastTime}
+      />
+      <TabBar />
+    </div>
+  );
+};
 
-export default Home
+export default Home;
