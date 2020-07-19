@@ -30,7 +30,7 @@ const arr = [
   },
 ];
 
-const Home = function (props) {
+const Home = props => {
   return (
     <div className="home-box">
       <HeaderBar />
@@ -41,6 +41,9 @@ const Home = function (props) {
         nickName={item.nickName}
         lastRecord={item.lastRecord}
         lastTime={item.lastTime}
+        onClick={() => {
+          props.history.push("/home/message");
+        }}
       />
       <TabBar />
     </div>

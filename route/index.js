@@ -11,6 +11,7 @@ const Router = () => {
           x-for={(item, index) in routeMap}
           path={item.path}
           component={item.component}
+          exact={item.exact || false}
         />
       </Switch>
     </Suspense>

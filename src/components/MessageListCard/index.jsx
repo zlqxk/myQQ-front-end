@@ -1,11 +1,13 @@
 import React from "react";
-import { WhiteSpace } from "antd-mobile";
 import PropTypes from "prop-types";
 import "./index.less";
 
 const MessageListCard = props => {
   return (
-    <div className="messageListCard-box">
+    <div 
+      className="messageListCard-box" 
+      onClick={props.onClick}
+    >
       <div className="messageListCard">
         <div className="messageListCard-left">
           <div className="messageListCard-pic">
@@ -27,6 +29,7 @@ MessageListCard.propTypes = {
   nickName: PropTypes.string,
   lastRecord: PropTypes.string,
   lastTime: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default MessageListCard;
