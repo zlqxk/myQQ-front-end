@@ -3,7 +3,6 @@ import "./index.less";
 import Input from "$src/components/Input";
 import { API_login } from "$src/api";
 import { Modal } from "antd-mobile";
-const alert = Modal.alert;
 
 const Login = function (props) {
   const [account, setAccount] = useState("");
