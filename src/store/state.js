@@ -1,3 +1,3 @@
 export default {
-  demo:123
-}
+  mobile: null,
+};

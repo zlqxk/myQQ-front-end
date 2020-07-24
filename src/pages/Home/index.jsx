@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./index.less";
-import MessageListCard from "$src/components/MessageListCard";
+import ListCard from "$src/components/ListCard";
 import TabBar from "$src/components/TabBar";
 import HeaderBar from "$src/components/HeaderBar";
 const arr = [
@@ -34,17 +34,19 @@ const Home = props => {
   return (
     <div className="home-box">
       <HeaderBar />
-      <MessageListCard
-        key={index}
-        x-for={(item, index) in arr}
-        userPic={item.userPic}
-        nickName={item.nickName}
-        lastRecord={item.lastRecord}
-        lastTime={item.lastTime}
-        onClick={() => {
-          props.history.push("/home/message");
-        }}
-      />
+      <div className="home-content">
+        <ListCard
+          key={index}
+          x-for={(item, index) in arr}
+          userPic={item.userPic}
+          nickName={item.nickName}
+          lastRecord={item.lastRecord}
+          extra={item.lastTime}
+          onClick={() => {
+            props.history.push("/home/message");
+          }}
+        />
+      </div>
       <TabBar />
     </div>
   );

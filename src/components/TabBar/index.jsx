@@ -16,7 +16,7 @@ const TabBar = props => {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/user">
+        <NavLink to="/friendList">
           <span className="iconfont icon-lianxirenxuanzhong"></span>
           <span>联系人</span>
         </NavLink>

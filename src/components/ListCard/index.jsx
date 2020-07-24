@@ -2,34 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.less";
 
-const MessageListCard = props => {
+const ListCard = props => {
   return (
     <div 
-      className="messageListCard-box" 
+      className="listCard-box" 
       onClick={props.onClick}
     >
-      <div className="messageListCard">
-        <div className="messageListCard-left">
-          <div className="messageListCard-pic">
+      <div className="listCard">
+        <div className="listCard-left">
+          <div className="listCard-pic">
             <img width="100%" height="100%" src={props.userPic} alt="" />
           </div>
-          <div className="messageListCard-nickName">
+          <div className="listCard-nickName">
             <p>{props.nickName}</p>
             <p>{props.lastRecord}</p>
           </div>
         </div>
-        <div className="messageListCard-right">{props.lastTime}</div>
+        <div className="listCard-extra">{props.extra}</div>
       </div>
     </div>
   );
 };
 
-MessageListCard.propTypes = {
+ListCard.propTypes = {
   userPic: PropTypes.string,
   nickName: PropTypes.string,
   lastRecord: PropTypes.string,
-  lastTime: PropTypes.string,
+  extra: PropTypes.node,
   onClick: PropTypes.func,
 };
 
-export default MessageListCard;
+export default ListCard;
