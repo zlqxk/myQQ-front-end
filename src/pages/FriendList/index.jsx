@@ -1,65 +1,11 @@
-import React, { useEffect } from "react";
-import { Button } from "antd-mobile";
+import React, { useState } from "react";
+import { Button, SearchBar, WhiteSpace } from "antd-mobile";
 import "./index.less";
 import TabBar from "$src/components/TabBar";
 import HeaderBar from "$src/components/HeaderBar";
 import ListCard from "$src/components/ListCard";
 
 const arr = [
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露asdasdasdadasdsadasdasdasdasdadasdasdasd",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露阿萨大大大叔",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
   {
     userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
     nickName: "珂珂",
@@ -83,6 +29,8 @@ const mock = [
 ];
 
 const FriendList = props => {
+  const [searchValue, setSearchValue] = useState("");
+
   const agreeRequest = e => {
     console.log(e);
   };
@@ -113,6 +61,15 @@ const FriendList = props => {
     <div className="friendList-box">
       <HeaderBar />
       <div className="friendList-content">
+        <WhiteSpace size="xs" />
+        <SearchBar
+          style={{ background: "#fbfbfb" }}
+          placeholder="添加好友"
+          value={searchValue}
+          onChange={value => {
+            setSearchValue(value);
+          }}
+        />
         <div className="friendList-newFriend">
           <header>
             <span>有新朋友添加</span>
