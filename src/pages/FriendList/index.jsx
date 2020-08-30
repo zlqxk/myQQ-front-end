@@ -26,6 +26,7 @@ const FriendList = (props) => {
   const [searchValueState, setSearchValueState] = useState("");
   const [waitFriendsState, setWaitFriendsState] = useState([]);
   const [friendsListState, setFriendsListState] = useState([]);
+  const [loadingState, setLoadingState] = useState(false); // 防止加载时闪烁
 
   // 获取添加好友列表
   const queryWaitAddFriends = useCallback(() => {
@@ -64,7 +65,9 @@ const FriendList = (props) => {
           });
         setFriendsListState(newData);
       }
-    });
+    }).finally(() => {
+      setLoadingState(true)
+    })
   }, [getCookie('account')]);
 
   useEffect(() => {
@@ -164,7 +167,6 @@ const FriendList = (props) => {
         </header>
         <ListCard
           key={index}
-          x-if={friendsListState.length}
           x-for={(item, index) in friendsListState}
           userPic={item.userPic}
           nickName={item.nickName}
@@ -174,7 +176,7 @@ const FriendList = (props) => {
           }}
         />
         <Result
-          x-if={!friendsListState.length}
+          x-if={!friendsListState.length && loadingState}
           img={
             <Icon
               type="check-circle"
