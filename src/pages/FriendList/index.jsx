@@ -1,48 +1,108 @@
-import React, { useState } from "react";
-import { Button, SearchBar, WhiteSpace } from "antd-mobile";
+import React, { useState, useEffect, useCallback } from "react";
 import "./index.less";
+// api
+// import socketAddFriends from '$src/io/socketAddFriends';
+import {
+  API_addFriends,
+  API_queryWaitAddFriends,
+  API_addFriendsResult,
+  API_queryFriends,
+} from "$src/api";
+import { getCookie } from "$src/utils";
+// 组件
+import {
+  Button,
+  SearchBar,
+  WhiteSpace,
+  Toast,
+  Result,
+  Icon,
+} from "antd-mobile";
 import TabBar from "$src/components/TabBar";
 import HeaderBar from "$src/components/HeaderBar";
 import ListCard from "$src/components/ListCard";
 
-const arr = [
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-];
-const mock = [
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂珂珂珂珂珂珂珂珂珂珂珂珂",
-    lastRecord: "你好啊露露",
-    lastTime: "昨天",
-  },
-  {
-    userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
-    nickName: "珂珂asdasdasdasd",
-    lastRecord: "你好啊露露asdasdasd",
-    lastTime: "昨天",
-  },
-];
+const FriendList = (props) => {
+  const [searchValueState, setSearchValueState] = useState("");
+  const [waitFriendsState, setWaitFriendsState] = useState([]);
+  const [friendsListState, setFriendsListState] = useState([]);
 
-const FriendList = props => {
-  const [searchValue, setSearchValue] = useState("");
+  // 获取添加好友列表
+  const queryWaitAddFriends = useCallback(() => {
+    API_queryWaitAddFriends({
+      receiverId: getCookie('account'),
+    }).then((res) => {
+      if (res.success) {
+        const newData =
+          Array.isArray(res.data) &&
+          res.data.map((item) => {
+            return {
+              nickName: item.senderId,
+              userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
+              lastTime: "昨天",
+            };
+          });
+        setWaitFriendsState(newData);
+      }
+    });
+  }, [getCookie('account')]);
 
-  const agreeRequest = e => {
-    console.log(e);
+  // 获取好友列表
+  const queryFriends = useCallback(() => {
+    API_queryFriends({
+      senderId: getCookie('account'),
+    }).then((res) => {
+      if (res.success) {
+        const newData =
+          Array.isArray(res.data) &&
+          res.data.map((item) => {
+            return {
+              nickName: item.receiverId,
+              userPic: "//47.111.171.15:7001/myqq/img/defaultPic.svg",
+              lastTime: "昨天",
+            };
+          });
+        setFriendsListState(newData);
+      }
+    });
+  }, [getCookie('account')]);
+
+  useEffect(() => {
+    queryWaitAddFriends();
+    queryFriends();
+  }, [queryWaitAddFriends, queryFriends]);
+
+  const agreeRequest = (flag, senderId) => {
+    API_addFriendsResult({
+      senderId: senderId,
+      receiverId: getCookie('account'),
+      agree: flag,
+    }).then((res) => {
+      if (res.success) {
+        queryWaitAddFriends();
+        queryFriends();
+      }
+    })
   };
-  const rejectRequest = e => {
-    console.log(e);
+
+  const onAddFriends = () => {
+    API_addFriends({
+      senderId: getCookie('account'),
+      receiverId: searchValueState,
+    }).then((res) => {
+      if (res.success) {
+        Toast.success(res.data);
+      }
+    });
   };
 
-  const renderAddExtra = () => {
+  const renderAddExtra = (senderId) => {
     return (
       <>
         <Button
-          onClick={agreeRequest}
+          onClick={() => {
+            agreeRequest(true, senderId);
+          }}
           type="ghost"
           inline
           size="small"
@@ -50,7 +110,15 @@ const FriendList = props => {
         >
           同意
         </Button>
-        <Button onClick={rejectRequest} type="ghost" inline size="small">
+        <Button
+          onClick={() => {
+            agreeRequest(false, senderId);
+          }}
+          type="ghost"
+          inline
+          size="small"
+          style={{ marginRight: "4px" }}
+        >
           拒绝
         </Button>
       </>
@@ -65,12 +133,16 @@ const FriendList = props => {
         <SearchBar
           style={{ background: "#fbfbfb" }}
           placeholder="添加好友"
-          value={searchValue}
-          onChange={value => {
-            setSearchValue(value);
+          value={searchValueState}
+          onChange={(value) => {
+            setSearchValueState(value);
           }}
+          onSubmit={onAddFriends}
         />
-        <div className="friendList-newFriend">
+        <div
+          x-if={waitFriendsState.length > 0}
+          className="friendList-newFriend"
+        >
           <header>
             <span>有新朋友添加</span>
             <span className="iconfont icon-iconfonti"></span>
@@ -78,11 +150,11 @@ const FriendList = props => {
           <div>
             <ListCard
               key={index}
-              x-for={(item, index) in mock}
+              x-for={(item, index) in waitFriendsState}
               userPic={item.userPic}
               nickName={item.nickName}
               lastRecord="请求添加好友"
-              extra={renderAddExtra()}
+              extra={renderAddExtra(item.nickName)}
             />
           </div>
         </div>
@@ -92,13 +164,26 @@ const FriendList = props => {
         </header>
         <ListCard
           key={index}
-          x-for={(item, index) in arr}
+          x-if={friendsListState.length}
+          x-for={(item, index) in friendsListState}
           userPic={item.userPic}
           nickName={item.nickName}
           lastRecord={item.lastRecord}
           onClick={() => {
             props.history.push("/home/message");
           }}
+        />
+        <Result
+          x-if={!friendsListState.length}
+          img={
+            <Icon
+              type="check-circle"
+              className="spe"
+              style={{ fill: "#1F90E6" }}
+            />
+          }
+          title="暂无好友"
+          message="你可以通过上方添加好友"
         />
       </div>
       <TabBar />

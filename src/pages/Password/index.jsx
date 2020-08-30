@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./index.less";
 import Button from "$src/components/Button";
+import { addCookie } from '$src/utils'
 import _ from "lodash";
 import { API_create } from "$src/api";
 
@@ -18,6 +19,7 @@ const Password = function (props) {
       password,
     }).then((res) => {
       if(res.success) {
+        addCookie('account', mobile)
         props.history.replace('/home')
       }
     });

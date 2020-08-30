@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import "./index.less";
-import Input from "$src/components/Input";
+// api
 import { API_login } from "$src/api";
-import { Modal } from "antd-mobile";
+import { addCookie } from '$src/utils'
+// 组件
+import Input from "$src/components/Input";
 
 const Login = function (props) {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = () => {
+  const onLogin = () => {
     const data = {
       account,
       password,
     };
     API_login(data).then(res => {
       if (res.success) {
+        addCookie('account', account)
         props.history.replace("/home");
       }
     });
@@ -47,7 +50,7 @@ const Login = function (props) {
       </div>
       <button
         disabled={!password || !account}
-        onClick={login}
+        onClick={onLogin}
         className={`login-button ${!password || !account ? "disabled" : ""}`}
       >
         <img src="//47.111.171.15:7001/myqq/img/xiayibu.png" alt="" />

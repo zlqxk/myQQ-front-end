@@ -5,7 +5,6 @@ const alert = Modal.alert;
 function handleReslove(res) {
   if (!res) return;
   const data = res.data;
-  console.log(data,'data')
   if (!data) {
     alert('网络错误，请稍后再试');
     return Promise.reject(res || {})
@@ -22,6 +21,7 @@ function handleReslove(res) {
 
 function handleReject() {
   alert('请求错误');
+  return Promise.reject(null)
 }
 
 export default function(opt) {
