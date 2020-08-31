@@ -1,28 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./index.less";
-import Button from "$src/components/Button";
-import { Checkbox } from "antd-mobile";
+// api
 import { API_sendCode, API_checkCode } from "$src/api";
-let id = "";
+// 组件
+import Button from "$src/components/Button";
+import MyInput from "$src/components/MyInput";
+import { Checkbox } from "antd-mobile";
+const pStyle = {
+  fontSize: ".16rem",
+  color: "#2c3e50",
+};
 
 const Register = function (props) {
-  const [isReadAgreement, setIsReadAgreement] = useState(false);
-  const [time, setTime] = useState(0);
-  const [inputMoblie, setInputMobile] = useState("");
-  const [inputCode, setInputCode] = useState("");
-  const currentTime = useRef(60);
-
-  useEffect(() => {
-    return () => {
-      clearInterval(id);
-    };
-  }, [clearInterval]);
+  const [isReadAgreementState, setIsReadAgreementState] = useState(false);
+  const [timeState, setTimeState] = useState(0);
+  const [inputMoblieState, setInputMobileState] = useState("");
+  const [checkCodeState, setCheckCodeState] = useState("");
+  const currentTimeRef = useRef(60);
 
   /**
    * 发送验证码
    */
-  const sendCode = () => {
-    API_sendCode({ mobile: inputMoblie }).then((res) => {
+  const onSendCode = () => {
+    API_sendCode({ mobile: inputMoblieState }).then(res => {
       if (res.success) {
         handleInterval();
       }
@@ -34,16 +34,15 @@ const Register = function (props) {
    */
   const handleInterval = () => {
     // 先立即执行一次
-    setTime(currentTime.current);
-    id = setInterval(() => {
+    setTimeState(--currentTimeRef.current);
+    const id = setInterval(() => {
       // 如果倒计时大于0则倒计时，小于0则停止
-      if (currentTime.current > 0) {
-        currentTime.current--;
-        setTime(currentTime.current);
-      } else {
-        currentTime.current = 60;
+      currentTimeRef.current--;
+      if (currentTimeRef.current === 0) {
+        currentTimeRef.current = 60;
         clearInterval(id);
       }
+      setTimeState(currentTimeRef.current);
     }, 1000);
   };
 
@@ -52,31 +51,51 @@ const Register = function (props) {
    */
   const mobileRegister = () => {
     const data = {
-      mobile: inputMoblie,
-      code: inputCode,
+      mobile: inputMoblieState,
+      code: checkCodeState,
     };
-    API_checkCode(data).then((res) => {
+    API_checkCode(data).then(res => {
       if (res.success) {
         props.history.push({
           pathname: "/password",
           state: {
-            mobile: inputMoblie,
+            mobile: inputMoblieState,
           },
         });
       }
     });
   };
 
+  const renderCode = () => {
+    const spanStyle = {
+      fontSize: ".16rem",
+      marginLeft: ".1rem",
+    }
+    return !timeState ? (
+      <span
+        style={{
+          ...spanStyle,
+          color: "#1fa2ff",
+        }}
+        onClick={onSendCode}
+      >
+        获取验证码
+      </span>
+    ) : (
+      <span style={spanStyle}>
+        {`${timeState}s后重试`}
+      </span>
+    );
+  };
+
   return (
     <div className="register-box">
-      <header>
-        {/* <img onClick={() => {props.history.push('/login')}} src="//47.111.171.15:7001/myqq/img/left.png" alt=""/> */}
-      </header>
+      <header></header>
       <article>输入手机号码</article>
       <div className="register-agreement">
         <Checkbox
           onChange={() => {
-            setIsReadAgreement(!isReadAgreement);
+            setIsReadAgreementState(!isReadAgreementState);
           }}
         />
         <span>
@@ -85,46 +104,28 @@ const Register = function (props) {
         </span>
       </div>
       <div className="register-input">
-        <span>+86</span>
-        <input
-          value={inputMoblie}
-          onChange={(e) => {
-            setInputMobile(e.target.value);
+        <MyInput
+          fashion="underline"
+          addonBefore={<p style={pStyle}>+86</p>}
+          value={inputMoblieState}
+          onChange={value => {
+            setInputMobileState(value);
           }}
-          placeholder="请输入手机号码"
-          type="text"
         />
-        |
-        {!time ? (
-          <span
-            style={{
-              fontSize: ".16rem",
-              marginLeft: ".1rem",
-              color: "#1fa2ff",
-            }}
-            onClick={sendCode}
-          >
-            获取验证码
-          </span>
-        ) : (
-          <span style={{ fontSize: ".16rem", marginLeft: ".1rem" }}>
-            {`${time}s后重试`}
-          </span>
-        )}
       </div>
       <div className="register-input">
-        <span>验证码</span>
-        <input
-          value={inputCode}
-          onChange={(e) => {
-            setInputCode(e.target.value);
-          }}
+        <MyInput
+          fashion="underline"
           placeholder="请输入验证码"
-          type="text"
+          value={checkCodeState}
+          onChange={value => {
+            setCheckCodeState(value);
+          }}
+          addonAfter={renderCode()}
         />
       </div>
       <div className="register-button">
-        <Button visible={isReadAgreement} onClick={mobileRegister}>
+        <Button visible={isReadAgreementState} onClick={mobileRegister}>
           下一步
         </Button>
       </div>

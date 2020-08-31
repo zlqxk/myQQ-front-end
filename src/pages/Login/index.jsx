@@ -2,22 +2,25 @@ import React, { useState } from "react";
 import "./index.less";
 // api
 import { API_login } from "$src/api";
-import { addCookie } from '$src/utils'
+import { addCookie } from "$src/utils";
 // 组件
-import Input from "$src/components/Input";
+import MyInput from "$src/components/MyInput";
 
-const Login = function (props) {
-  const [account, setAccount] = useState("");
-  const [password, setPassword] = useState("");
+const Login = props => {
+  const [accountState, setAccountState] = useState("");
+  const [passwordState, setPasswordState] = useState("");
 
   const onLogin = () => {
     const data = {
-      account,
-      password,
+      accountState,
+      passwordState,
     };
-    API_login(data).then(res => {
+    API_login({
+      account: accountState,
+      password: passwordState,
+    }).then(res => {
       if (res.success) {
-        addCookie('account', account)
+        addCookie("accountState", accountState);
         props.history.replace("/home");
       }
     });
@@ -29,29 +32,32 @@ const Login = function (props) {
         <img
           width="100%"
           height="100%"
-          src="//47.111.171.15:7001/myqq/img/qq-logo.jpg"
+          src="//47.111.171.15:7001/myqq/img/logo.png"
         />
       </div>
       <div className="login-content">
-        <Input
-          userPic="//timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588882308143&di=e627d42402ece767896fe776254226d8&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F36%2F48%2F19300001357258133412489354717.jpg"
-          onChange={e => {
-            setAccount(e.target.value);
+        <MyInput
+          value={accountState}
+          onChange={value => {
+            setAccountState(value);
           }}
         />
       </div>
       <div className="login-content">
-        <Input
+        <MyInput
           type="password"
-          onChange={e => {
-            setPassword(e.target.value);
+          value={passwordState}
+          onChange={value => {
+            setPasswordState(value);
           }}
         />
       </div>
       <button
-        disabled={!password || !account}
+        disabled={!passwordState || !accountState}
         onClick={onLogin}
-        className={`login-button ${!password || !account ? "disabled" : ""}`}
+        className={`login-button ${
+          !passwordState || !accountState ? "disabled" : ""
+        }`}
       >
         <img src="//47.111.171.15:7001/myqq/img/xiayibu.png" alt="" />
       </button>

@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./index.less";
-import Button from "$src/components/Button";
-import { addCookie } from '$src/utils'
+// api
+import { addCookie } from "$src/utils";
 import _ from "lodash";
 import { API_create } from "$src/api";
+// 组件
+import Button from "$src/components/Button";
+import MyInput from "$src/components/MyInput";
 
 const Password = function (props) {
-  const [password, setPassword] = useState("");
-  const [mobile, setMobile] = useState("");
+  const [passwordState, setPasswordState] = useState("");
+  const [mobileState, setMobileState] = useState("");
 
   useEffect(() => {
-    setMobile(_.get(props, "history.location.state.mobile", ""));
+    setMobileState(_.get(props, "history.location.state.mobile", ""));
   }, [props]);
 
   // 注册账号
   const register = () => {
     API_create({
-      password,
-    }).then((res) => {
-      if(res.success) {
-        addCookie('account', mobile)
-        props.history.replace('/home')
+      password: passwordState,
+    }).then(res => {
+      if (res.success) {
+        addCookie("account", mobileState);
+        props.history.replace("/home");
       }
     });
   };
@@ -33,16 +36,17 @@ const Password = function (props) {
       <article>请输入密码</article>
       <div className="password-title">
         <span>注册的手机号为：</span>
-        <span>{mobile}</span>
+        <span>{mobileState}</span>
       </div>
       <div className="password-input">
-        <input
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
+        <MyInput
+          value={passwordState}
+          onChange={value => {
+            setPasswordState(value);
           }}
           placeholder="请输入密码"
           type="text"
+          fashion="underline"
         />
       </div>
       <div className="password-button">
