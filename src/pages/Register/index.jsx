@@ -13,7 +13,7 @@ const pStyle = {
 
 const Register = function (props) {
   const [isReadAgreementState, setIsReadAgreementState] = useState(false);
-  const [timeState, setTimeState] = useState(0);
+  const [timeState, setTimeState] = useState(60);
   const [inputMoblieState, setInputMobileState] = useState("");
   const [checkCodeState, setCheckCodeState] = useState("");
   const currentTimeRef = useRef(60);
@@ -52,7 +52,7 @@ const Register = function (props) {
   const mobileRegister = () => {
     const data = {
       mobile: inputMoblieState,
-      code: checkCodeState,
+      checkCode: checkCodeState,
     };
     API_checkCode(data).then(res => {
       if (res.success) {
@@ -71,7 +71,7 @@ const Register = function (props) {
       fontSize: ".16rem",
       marginLeft: ".1rem",
     }
-    return !timeState ? (
+    return timeState === 60 ? (
       <span
         style={{
           ...spanStyle,

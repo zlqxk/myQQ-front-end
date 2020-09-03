@@ -11,16 +11,12 @@ const Login = props => {
   const [passwordState, setPasswordState] = useState("");
 
   const onLogin = () => {
-    const data = {
-      accountState,
-      passwordState,
-    };
     API_login({
       account: accountState,
       password: passwordState,
     }).then(res => {
       if (res.success) {
-        addCookie("accountState", accountState);
+        addCookie("account", accountState);
         props.history.replace("/home");
       }
     });

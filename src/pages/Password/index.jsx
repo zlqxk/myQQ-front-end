@@ -19,6 +19,7 @@ const Password = function (props) {
   // 注册账号
   const register = () => {
     API_create({
+      mobile: mobileState,
       password: passwordState,
     }).then(res => {
       if (res.success) {
